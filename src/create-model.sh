@@ -2,16 +2,8 @@
 #
 # Train POS tagger using a corpus.
 #
-
-GTP=/home/utku/work/POS_Tagger/implementation/fix-bugs-olddata/newtests1
-
-# set environment variables used in IRSTLM
-export MACHTYPE=`uname -m`
-export OSTYPE=`uname -s`
-
-# clean directory
-rm -f 3gram.pos 3gram.word all.pos atb.taglist ikn.stat pos.lm.1gr.gz pos.lm.2gr.gz pos.lm.3gr.gz pos.lm.gz pos.qlm sorted.taglist tag.pos tag.train.txt word.dic word.lm.1gr.gz word.lm.2gr.gz word.lm.3gr.gz word.lm.gz word.pos word.qlm word-tag.train.txt word.train.txt pref* ps*  suf* *.pos word.temp*  *temp*
-rm -f ../*dic ../tren.pos.ngram ../pos-out.txt ../pos-ref.txt ../pos-test.txt ../wer.out
+# Copyright (c) 2012 Teknoloji Yazılımevi. All rights reserved.
+#
 
 # prepare training data
 
