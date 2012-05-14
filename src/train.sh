@@ -1,13 +1,16 @@
 #!/bin/bash
+
+#########################################################################################
 #
 # Main script used to train a POS tagger.
 #
 # Copyright (c) 2012 Teknoloji Yazılımevi. All rights reserved.
 #
+#########################################################################################
 
-#################################################################################
-# 1. Getting ready for the training.
-#################################################################################
+#########################################################################################
+# 1. Get ready for the training!
+#########################################################################################
 
 # 1.1. Validate command line arguments.
 if [ $# -eq 0 ]
@@ -19,12 +22,19 @@ if [ $# -eq 0 ]
 fi
 
 # 1.2. Initiate work environment.
-./init.sh $1
+source ./init.sh $1
 
-#################################################################################
+#########################################################################################
 # 2. Begin training the POS tagging model.
-#################################################################################
+#########################################################################################
 
-# 2.1. Prune data according to the model name specified in the command line.
-source ./experiments/$1.sh
+# 2.1. Go to the workfolder
+cd $WORK_FOLDER
 
+# 2.2. Prune training data according to the model name specified in the CL.
+cat $DATA_FILE | $SRC_FOLDER/experiments/$1.sh > $WORK_FOLDER/pruned.data
+
+# 2.3. Preprocess training data.
+$SRC_FOLDER/preprocess.sh
+
+$SRC_FOLDER/create-model.sh

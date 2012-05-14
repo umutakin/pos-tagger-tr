@@ -1,9 +1,12 @@
 #!/bin/bash
+
+#################################################################################
 #
 # Prepare the work environment for the training.
 #
 # Copyright (c) 2012 Teknoloji Yazılımevi. All rights reserved.
 #
+#################################################################################
 
 #################################################################################
 # Validate model name.
@@ -18,6 +21,15 @@ fi
 # Set environment variables.
 #################################################################################
 source ./env.sh
+
+#################################################################################
+# Check if the main folder path is set correctly.
+#################################################################################
+if [ ! -d $MODELS_FOLDER ] || [ ! -d $DATA_FOLDER ] || [ ! -d $SRC_FOLDER ]
+	then
+	echo "Error   : Main folder not set correctly. Update variables in env.sh"
+	exit
+fi
 
 #################################################################################
 # Check GTP grammar rule files.
@@ -66,16 +78,20 @@ fi
 #################################################################################
 mkdir $MODELS_FOLDER/$1
 mkdir $MODELS_FOLDER/$1/train
+
 export WORK_FOLDER=$MODELS_FOLDER/$1/train
-cd $MODELS_FOLDER
 
 #################################################################################
 # Link GTP grammar rule files.
 #################################################################################
+cd $MODELS_FOLDER/$1
+
 for f in CLex CTrans TLex TTrans ULex UTrans Par Symbols NEL
 do
 	ln -s $GTP_FS_PATH/$GTP_FS_NAME$f.db
 done
+
+ln -s $GTP_FS_PATH/SI"$GTP_FS_NAME"Symbols.db
 
 for f in 1 2 3
 do
