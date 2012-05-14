@@ -1,6 +1,6 @@
 #################################################################################
 #
-# Set environment variables.
+# Replace dates and digits.
 #
 # Copyright (c) 2012 Teknoloji Yazılımevi. All rights reserved.
 #

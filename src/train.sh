@@ -25,10 +25,10 @@ fi
 source ./init.sh $1
 
 #########################################################################################
-# 2. Begin training the POS tagging model.
+# 2. Start training the POS tagging model.
 #########################################################################################
 
-# 2.1. Go to the workfolder
+# 2.1. Go to the workfolder.
 cd $WORK_FOLDER
 
 # 2.2. Prune training data according to the model name specified in the CL.
@@ -37,4 +37,20 @@ cat $DATA_FILE | $SRC_FOLDER/experiments/$1.sh > $WORK_FOLDER/pruned.data
 # 2.3. Preprocess training data.
 $SRC_FOLDER/preprocess.sh
 
-$SRC_FOLDER/create-model.sh
+# 2.4 Create the necessary files.
+$SRC_FOLDER/create-files.sh
+
+# 2.5 Create the model files.
+$SRC_FOLDER/irstlm.sh
+
+# 2.6 Update the file system parameters.
+$SRC_FOLDER/update-fs.sh
+
+#########################################################################################
+# 3. Test the model
+#########################################################################################
+
+$SRC_FOLDER/test-pos.sh pos-test.txt 0.99 20 
+
+#echo "dev-test results:"
+#./dev-pos.sh pos-dev.txt 0.99 20 
