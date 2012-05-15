@@ -41,16 +41,17 @@ $SRC_FOLDER/preprocess.sh
 $SRC_FOLDER/create-files.sh
 
 # 2.5 Create the model files.
-$SRC_FOLDER/irstlm.sh
+$SRC_FOLDER/irstlm.sh 2> irstlm.log
 
 # 2.6 Update the file system parameters.
-$SRC_FOLDER/update-fs.sh
+$SRC_FOLDER/update-fs.sh $1
 
 #########################################################################################
 # 3. Test the model
 #########################################################################################
 
-$SRC_FOLDER/test-pos.sh pos-test.txt 0.99 20 
+cd $MODELS_FOLDER/$1
+$SRC_FOLDER/test.sh pos.test 0.99 20 2> test.log
 
 #echo "dev-test results:"
 #./dev-pos.sh pos-dev.txt 0.99 20 

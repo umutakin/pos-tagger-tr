@@ -42,11 +42,11 @@ $IRSTLM_BIN/dict -i=key2.pos -o=../tren.pos.k2dic -f=y -sort=no
 $IRSTLM_BIN/dict -i=word.pos -o=../tren.pos.wdic -f=y -sort=no
 
 # 9. Build the word n-gram to calculate OOV for a test file. Can be omitted if OOV is not  
-$IRSTLM_BIN/ngt -i=word.pos -n=3 -gooout=y -o=3gram.word -fd=../tren.pos.wdic -iknstat=ikn.stat
-$IRSTLM_BIN/build-sublm.pl --size 3 --ngrams 3gram.word --sublm word.lm --improved-kneser-ney ikn.stat
-$IRSTLM_BIN/merge-sublm.pl --size 3 --sublm word. -lm word.lm.gz
-$IRSTLM_BIN/quantize-lm word.lm.gz word.qlm
-$IRSTLM_BIN/compile-lm word.qlm --eval ../pos-test.txt
+# $IRSTLM_BIN/ngt -i=word.pos -n=3 -gooout=y -o=3gram.word -fd=../tren.pos.wdic -iknstat=ikn.stat
+# $IRSTLM_BIN/build-sublm.pl --size 3 --ngrams 3gram.word --sublm word.lm --improved-kneser-ney ikn.stat
+# $IRSTLM_BIN/merge-sublm.pl --size 3 --sublm word. -lm word.lm.gz
+# $IRSTLM_BIN/quantize-lm word.lm.gz word.qlm
+# $IRSTLM_BIN/compile-lm word.qlm --eval ../pos-test.txt
 
 # 10. Generate suffix analysis files.
 for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20

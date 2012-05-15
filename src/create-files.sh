@@ -9,36 +9,22 @@
 #################################################################################
 
 # put every 50th sentence into the test file.
-echo "create test and reference files."
-sed -n '0~50p' word.txt | sed -f $SRC_FOLDER/regex.train > pos-test.txt
-sed -n '0~50p' tag.txt | sed -f $SRC_FOLDER/regex.train > pos-ref.txt
+sed -n '0~50p' word.txt | sed -f $SRC_FOLDER/regex.train > ../pos.test
+sed -n '0~50p' tag.txt | sed -f $SRC_FOLDER/regex.train | sed "s/[-_]//g" > ../pos.ref
 
-# delete the selected test sentences from the training data.
-sed '0~50d' tag.txt > tag.train.temp.txt
-sed '0~50d' word-tag.txt > word-tag.train.temp.txt
-sed '0~50d' word.txt > word.train.temp.txt
+# delete the selected test sentences from the training data and
+# apply regular expressions to normalize the data files.
+sed '0~50d' tag.txt | sed -f $SRC_FOLDER/regex.tag > tag.pos
+sed '0~50d' word-tag.txt | sed -f $SRC_FOLDER/regex.word > key.pos
+sed '0~50d' word.txt | sed -f $SRC_FOLDER/regex.train > word.pos
 
-# put every 50th sentence into the development file.
-sed -n '0~50p' word.train.temp.txt | sed -f $SRC_FOLDER/regex.train > pos-dev.txt
-sed -n '0~50p' tag.train.temp.txt | sed -f $SRC_FOLDER/regex.train > pos-dev-ref.txt
-
-# delete the selected development sentences from the training data.
-sed '0~50d' tag.train.temp.txt > tag.train.txt
-sed '0~50d' word-tag.train.temp.txt > word-tag.train.txt
-sed '0~50d' word.train.temp.txt > word.train.txt
-
-# apply regular expressions to normalize the data files
-echo "normalize data files."
-cat tag.train.txt | sed -f $SRC_FOLDER/regex.tag > tag.pos
-cat word-tag.train.txt | sed -f $SRC_FOLDER/regex.word > key.pos
-cat word.train.txt | sed -f $SRC_FOLDER/regex.train > word.pos
-
-echo "generate prefix and suffix training files."
-cat key.pos | gawk -f prefix-suffix.awk
+# generate prefix and suffix training files.
+cat key.pos | gawk -f $SRC_FOLDER/prefix-suffix.awk
 
 # create second order word-tag file
-sed 's/<\/s>/_eof_/g' key.pos | awk '
-{
+cat key.pos |
+sed 's/<\/s>/_eof_/g' |
+gawk '{
   line++
   split($1, wt, "/")
   prevt = wt[2]
@@ -55,17 +41,13 @@ sed 's/<\/s>/_eof_/g' key.pos | awk '
     prevprevt = prevt
     prevt = wt[2]
   }
-}
-'
+}'
 
 sed 's/_eof_/<\/s>/g' key2-prime.pos > key2.pos
 sed 's/_eof_/<\/s>/g' tag2-prime.pos > tag2.pos
 sed 's/_eof_/<\/s>/g' tag3-prime.pos > tag3.pos
+
+# remove intermediate files.
 rm key2-prime.pos
 rm tag2-prime.pos
 rm tag3-prime.pos
-
-
-
-
-

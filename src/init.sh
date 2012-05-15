@@ -28,7 +28,7 @@ source ./env.sh
 if [ ! -d $MODELS_FOLDER ] || [ ! -d $DATA_FOLDER ] || [ ! -d $SRC_FOLDER ]
 	then
 	echo "Error   : Main folder not set correctly. Update variables in env.sh"
-	exit
+	exit 1
 fi
 
 #################################################################################
@@ -62,8 +62,8 @@ fi
 #################################################################################
 if [ -d $MODELS_FOLDER/$1 ]
 	then
-	echo "Warning : Model folder already exists: " $MODEL_FOLDER/$1
-	echo "Do you want to delete the existing model folder? (y/n)"
+	echo "Warning : Model folder already exists: " $MODELS_FOLDER/$1
+	echo "Warning : Do you want to delete the existing model folder? (y/n)"
 	read response
 	if [ "$response" == "y" ] || [ "$response" == "Y" ]
 		then

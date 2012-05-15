@@ -1,0 +1,10 @@
+s/-lrb-/punc/g
+s/-rrb-/punc/g
+s/^\-$/punc/g
+s/?/punc/g
+s/[!:;,]/punc/g
+s/^\...$/punc/g
+s/^\..$/punc/g
+s/^\.$/punc/g
+s/^`$/punc/g
+s/^\"$/punc/g

@@ -10,30 +10,26 @@
 #
 #################################################################################
 
-echo "Generating aX_POS-TAGS entry and compiling it into the FS."
-awk '{print $2, $1}' ../tren.pos.tdic | sort -rn > atb.taglist
-awk '
-BEGIN {
+cd $MODELS_FOLDER/$1
+
+cat tren.pos.tdic |
+gawk '{print $2, $1}' |
+sort -rn |
+gawk 'BEGIN {
   skip = "DICTIONARY"
-  printf "tX_POS-TAGS ::\n\t[\n" > "../ax-pos-tags.txt"
+  printf "tX_POS-TAGS ::\n\t[\n"
   row = 1
 }
 {
   if ($2 != skip) {
     if ($2 == "PX" || $2 == "NUM" || $2 == "<s>" || $2 == "</s>" || $2 == "D") 
-      printf "\t%d { \"%s\", 0, \"N\" }\n", row, $2 > "../ax-pos-tags.txt"
+      printf "\t%d { \"%s\", 0, \"N\" }\n", row, $2
     else
-      printf "\t%d { \"%s\", 1, \"N\" }\n", row, $2 > "../ax-pos-tags.txt"
+      printf "\t%d { \"%s\", 1, \"N\" }\n", row, $2
     row++
   }
 }
 END {
-  printf "\t]\n" > "../ax-pos-tags.txt"
-}' atb.taglist
-
-cd $MODELS_FOLDER/$1
-
-$GTP_BIN_PATH/gtpfs -c -f tren -i ax-pos-tags.txt
-
-tagsize=`cat ax-pos-tags.txt | wc -l`
-echo "tag size: ${tagsize}"  
+  printf "\t]\n"
+}' |
+$GTP_BIN_PATH/gtpfs -c
