@@ -32,12 +32,8 @@ gawk '{
     printf "%s/%s\n", $i, prevt > "key2-prime.pos"
     split($i, wt, "/")
     printf "%s/%s\n", wt[2], prevt > "tag2-prime.pos"
-    if (wt[2] == "") {
-      print line, i
-    }
-    if (i > 2) {
-      printf "%s/%s/%s\n", wt[2], prevt, prevprevt > "tag3-prime.pos"
-    }
+#    if (wt[2] == "") { print line, i }
+    if (i > 2) { printf "%s/%s/%s\n", wt[2], prevt, prevprevt > "tag3-prime.pos" }
     prevprevt = prevt
     prevt = wt[2]
   }

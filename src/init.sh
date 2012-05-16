@@ -20,14 +20,15 @@ fi
 #################################################################################
 # Set environment variables.
 #################################################################################
-source ./env.sh
+source ./env.sh $2
 
 #################################################################################
 # Check if the main folder path is set correctly.
 #################################################################################
 if [ ! -d $MODELS_FOLDER ] || [ ! -d $DATA_FOLDER ] || [ ! -d $SRC_FOLDER ]
 	then
-	echo "Error   : Main folder not set correctly. Update variables in env.sh"
+	echo "Error   : Main folder not set correctly."
+	echo "        : Obtain a recent version from the github repository."
 	exit 1
 fi
 

@@ -13,20 +13,24 @@
 #########################################################################################
 
 # 1.1. Validate command line arguments.
-if [ $# -eq 0 ]
+if [ $# -eq 0 ] || [ $# -eq 1 ]
 	then
-	echo "Usage   : ./train.sh <model-name>"
-	echo "        : <model-name> can be a name of an experiment in the reference paper."
-	echo "        : e.g. './train.sh ex-02'"
+	echo "Error   : Missing parameters."
+	echo "Usage   : ./train.sh <model-name> <gtp-fs-path>"
+	echo "        : <model-name> is the name of an experiment in the reference paper."
+	echo "        : <fs-path> is the path to the GTP file system."
+	echo "        : e.g. './train.sh exp-02 /Users/skopru/xcode/fs-tren'"
 	exit 1
 fi
 
 # 1.2. Initiate work environment.
-source ./init.sh $1
+source ./init.sh $1 $2
 
 #########################################################################################
 # 2. Start training the POS tagging model.
 #########################################################################################
+
+echo "Info    : Training started."
 
 # 2.1. Go to the workfolder.
 cd $WORK_FOLDER
@@ -49,6 +53,8 @@ $SRC_FOLDER/update-fs.sh $1
 #########################################################################################
 # 3. Test the model
 #########################################################################################
+
+echo "Info    : Testing started."
 
 cd $MODELS_FOLDER/$1
 $SRC_FOLDER/test.sh pos.test 0.99 20 2> test.log

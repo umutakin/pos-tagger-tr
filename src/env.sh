@@ -11,7 +11,8 @@
 #################################################################################
 # Environment variables used by the trainer.
 #################################################################################
-export MAIN_FOLDER=/Users/skopru/repos/pos-tagger
+cd "$( dirname "${BASH_SOURCE[0]}" )"/..
+export MAIN_FOLDER=`pwd`
 
 export MODELS_FOLDER=$MAIN_FOLDER/models
 export DATA_FOLDER=$MAIN_FOLDER/data
@@ -20,7 +21,13 @@ export SRC_FOLDER=$MAIN_FOLDER/src
 export DATA_FILE=$DATA_FOLDER/tr-950K.data
 export WORDS_FILE=$DATA_FOLDER/tr-950K.words
 
-export GTP_FS_PATH=/Users/skopru/xcode/fs-tren
+
+#################################################################################
+# GTP variables
+#################################################################################
+export GTP_FS_PATH=$1
+#export GTP_FS_PATH=/Users/skopru/xcode/fs-tren
+
 export GTP_FS_NAME=tren
 GTPRUNNER_DIR=`which gtprunner`
 if [ -z "$GTPRUNNER_DIR" ]
