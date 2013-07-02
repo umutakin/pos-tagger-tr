@@ -41,7 +41,7 @@ if [ -d $GTP_FS_PATH ]
 	do
 		if [ ! -e $GTP_FS_PATH/$GTP_FS_NAME$f.db ]
 			then
-			"Error   : Missing GTP grammar rule file:" $GTP_FS_PATH/$GTP_FS_NAME$f.db
+			echo "Error   : Missing GTP grammar rule file:" $GTP_FS_PATH/$GTP_FS_NAME$f.db
 			exit 1
 		fi
 	done	
@@ -49,7 +49,7 @@ if [ -d $GTP_FS_PATH ]
 	do
 		if [ ! -e $GTP_FS_PATH/__db.00$f ]
 			then
-			"Error   : Missing GTP grammar rule file:" $GTP_FS_PATH/__db.00$f
+			echo "Error   : Missing GTP grammar rule file:" $GTP_FS_PATH/__db.00$f
 			exit 1
 		fi
 	done	
