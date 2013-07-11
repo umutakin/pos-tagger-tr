@@ -8,15 +8,21 @@
 #
 #################################################################################
 
-# put every 50th sentence into the test file.
-sed -n '0~50p' word.txt | sed -f $SRC_FOLDER/regex.train > ../pos.test
-sed -n '0~50p' tag.txt | sed -f $SRC_FOLDER/regex.train | sed "s/[-_]//g" > ../pos.ref
+# compute line numbers with k parameter from train.sh
+STARTLINE=$[($(wc -l word.txt | gawk '{print $1}') /10) * $[$1-1] +1]
+#echo "startline: " $STARTLINE
+ENDLINE=$[($(wc -l word.txt | gawk '{print $1}') /10) * $1]
+#echo "endline: " $ENDLINE
+
+# put every sentence from startline to endline into the test file.
+sed -n $STARTLINE,$ENDLINE\p word.txt | sed -f $SRC_FOLDER/regex.train > ../pos.test
+sed -n $STARTLINE,$ENDLINE\p tag.txt | sed -f $SRC_FOLDER/regex.train | sed "s/[-_]//g" > ../pos.ref
 
 # delete the selected test sentences from the training data and
 # apply regular expressions to normalize the data files.
-sed '0~50d' tag.txt | sed -f $SRC_FOLDER/regex.tag > tag.pos
-sed '0~50d' word-tag.txt | sed -f $SRC_FOLDER/regex.word > key.pos
-sed '0~50d' word.txt | sed -f $SRC_FOLDER/regex.train > word.pos
+sed $STARTLINE,$ENDLINE\d tag.txt | sed -f $SRC_FOLDER/regex.tag > tag.pos
+sed $STARTLINE,$ENDLINE\d word-tag.txt | sed -f $SRC_FOLDER/regex.word > key.pos
+sed $STARTLINE,$ENDLINE\d word.txt | sed -f $SRC_FOLDER/regex.train > word.pos
 
 # generate prefix and suffix training files.
 cat key.pos | gawk -f $SRC_FOLDER/prefix-suffix.awk

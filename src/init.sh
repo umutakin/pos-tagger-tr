@@ -45,7 +45,7 @@ if [ -d $GTP_FS_PATH ]
 			exit 1
 		fi
 	done	
-	for f in 1 2 3
+	for f in 1 2 3 4
 	do
 		if [ ! -e $GTP_FS_PATH/__db.00$f ]
 			then
@@ -94,7 +94,7 @@ done
 
 ln -s $GTP_FS_PATH/SI"$GTP_FS_NAME"Symbols.db
 
-for f in 1 2 3
+for f in 1 2 3 4
 do
 	ln -s $GTP_FS_PATH/__db.00$f
 done
