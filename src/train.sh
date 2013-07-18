@@ -41,9 +41,6 @@ sum_insertion="0"
 sum_deletion="0"
 sum_substitution="0"
 
-#lineNumber="$(wc -l $DATA_FILE | gawk '{print $1}')"
-#echo $lineNumber
-
 # 'for' loop for 10-fold cross-validation 
 k="1"
 while [ $k -le $N ]
@@ -56,8 +53,8 @@ cd $WORK_FOLDER
 # 2.2. Prune training data according to the model name specified in the CL.
 cat $DATA_FILE | $SRC_FOLDER/experiments/$1.sh > $WORK_FOLDER/pruned.data
 
-#lineNumber="$(wc -l $WORK_FOLDER/pruned.data | gawk '{print $1}')"
-#echo $lineNumber
+# last line of all experiments i.e. s/.*_Punc/PUNC_PUNC/g. Since applied to all, its done here.
+sed 's/.*_Punc/PUNC_PUNC/g' pruned.data > temp && mv temp pruned.data
 
 # 2.3. Preprocess training data.
 $SRC_FOLDER/preprocess.sh
