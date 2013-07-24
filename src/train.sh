@@ -41,6 +41,27 @@ sum_insertion="0"
 sum_deletion="0"
 sum_substitution="0"
 
+########## Prepare files for frequency experiments i.e. exp11-16.
+cat $DATA_FILE | $SRC_FOLDER/cutter.sh > $WORK_FOLDER/clean_tag_file.txt
+
+# call pruner_average script with arguments as exp_number, exp_path, work_folder
+# avg
+python $SRC_FOLDER/pruner_average.py "11" $SRC_FOLDER/experiments/exp-11.sh $WORK_FOLDER
+
+# avg/2
+python $SRC_FOLDER/pruner_average.py "12" $SRC_FOLDER/experiments/exp-12.sh $WORK_FOLDER
+
+# avg/4
+python $SRC_FOLDER/pruner_average.py "13" $SRC_FOLDER/experiments/exp-13.sh $WORK_FOLDER
+
+# 2*avg
+python $SRC_FOLDER/pruner_average.py "14" $SRC_FOLDER/experiments/exp-14.sh $WORK_FOLDER
+
+#avg < 1000
+$SRC_FOLDER/counter.sh
+
+##################################################################
+
 # 'for' loop for 10-fold cross-validation 
 k="1"
 while [ $k -le $N ]
@@ -49,6 +70,8 @@ echo "Info    : Training started with k= " $k  " ."
 
 # 2.1. Go to the workfolder.
 cd $WORK_FOLDER
+
+
 
 # 2.2. Prune training data according to the model name specified in the CL.
 cat $DATA_FILE | $SRC_FOLDER/experiments/$1.sh > $WORK_FOLDER/pruned.data
