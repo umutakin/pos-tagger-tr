@@ -41,25 +41,8 @@ sum_insertion="0"
 sum_deletion="0"
 sum_substitution="0"
 
-########## Prepare files for frequency experiments i.e. exp11-16.
-cat $DATA_FILE | $SRC_FOLDER/cutter.sh > $WORK_FOLDER/clean_tag_file.txt
-
-# call pruner_average script with arguments as exp_number, exp_path, work_folder
-# avg
-python $SRC_FOLDER/pruner_average.py "11" $SRC_FOLDER/experiments/exp-11.sh $WORK_FOLDER
-
-# avg/2
-python $SRC_FOLDER/pruner_average.py "12" $SRC_FOLDER/experiments/exp-12.sh $WORK_FOLDER
-
-# avg/4
-python $SRC_FOLDER/pruner_average.py "13" $SRC_FOLDER/experiments/exp-13.sh $WORK_FOLDER
-
-# 2*avg
-python $SRC_FOLDER/pruner_average.py "14" $SRC_FOLDER/experiments/exp-14.sh $WORK_FOLDER
-
-#avg < 1000
-$SRC_FOLDER/counter.sh
-
+########## Prepare a clean tag file without <S>, </S> and ' ' from the data file.
+cat $DATA_FILE | sed -e '/<S>/d ; /<\/S>/d' | grep "\_"  | tr -d ' ' | cut -d "_" -f 2-20 > $WORK_FOLDER/clean_tag_file.txt
 ##################################################################
 
 # 'for' loop for 10-fold cross-validation 
@@ -71,13 +54,11 @@ echo "Info    : Training started with k= " $k  " ."
 # 2.1. Go to the workfolder.
 cd $WORK_FOLDER
 
-
-
 # 2.2. Prune training data according to the model name specified in the CL.
 cat $DATA_FILE | $SRC_FOLDER/experiments/$1.sh > $WORK_FOLDER/pruned.data
 
 # last line of all experiments i.e. s/.*_Punc/PUNC_PUNC/g. Since applied to all, its done here.
-sed 's/.*_Punc/PUNC_PUNC/g' pruned.data > temp && mv temp pruned.data
+sed 's/.*_Punc/PUNC_PUNC/g' $WORK_FOLDER/pruned.data > temp && mv temp $WORK_FOLDER/pruned.data
 
 # 2.3. Preprocess training data.
 $SRC_FOLDER/preprocess.sh

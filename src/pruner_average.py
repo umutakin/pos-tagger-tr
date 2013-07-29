@@ -1,3 +1,13 @@
+#!/usr/bin/python
+#########################################################################################
+#
+# Constructs frequency tree and creates sed commands for prunning.
+#
+# Copyright (c) 2012 Teknoloji Yazılımevi. All rights reserved.
+#
+#########################################################################################
+
+
 from copy import deepcopy
 import os
 import sys
