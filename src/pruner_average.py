@@ -1,6 +1,16 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from copy import deepcopy
 import os
 import sys
+
+#########################################################################################
+#
+# Constructs frequency tree and creates sed commands for prunning.
+#
+# Copyright (c) 2012 Teknoloji Yazılımevi. All rights reserved.
+#
+#########################################################################################
 
 class Node(object):
     def __init__(self, morph,freq,level):
