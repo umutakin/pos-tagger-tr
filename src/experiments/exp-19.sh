@@ -1,6 +1,6 @@
 #################################################################################
 #
-# Experiment 16: Keep most frequent 2000 tags in the data file.
+# Experiment 19: Keep most frequent 2000 tags in the data file.
 #
 # Copyright (c) 2012 Teknoloji Yazılımevi. All rights reserved.
 #
