@@ -12,9 +12,8 @@ python $SRC_FOLDER/tag_freqs.py $WORK_FOLDER
 
 cat $WORK_FOLDER/pruned.tmp | sort -nr | uniq | gawk '{print $2}' | sed -n 1,2000\p > $WORK_FOLDER/most_freq2000
 
-python $SRC_FOLDER/most-freq-tags.py 2000 $WORK_FOLDER $WORK_FOLDER/most_freq2000.sh
+python $SRC_FOLDER/most-freq-tags.py 2000 $WORK_FOLDER $WORK_FOLDER/most_freq2000.sed
 
-chmod 777 $WORK_FOLDER/most_freq2000.sh
+chmod 777 $WORK_FOLDER/most_freq2000.sed
 
-cat $DATA_FILE | $WORK_FOLDER/most_freq2000.sh > $WORK_FOLDER/pruned.data
-
+find $DATA_FOLDER -name $(basename $DATA_FILE) | xargs sed -f $WORK_FOLDER/most_freq2000.sed > $WORK_FOLDER/pruned.data

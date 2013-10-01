@@ -12,10 +12,9 @@ import sys
 #########################################################################################
 
 search_file = open(str(sys.argv[2]) + "/most_freq"+ str(sys.argv[1]),"r").read().strip().split('\n')
-clean_tag_file = open(str(sys.argv[2]) + "/clean_tag_file.txt", "r").read().strip().split('\n')
+clean_tag_file = open(str(sys.argv[2]) + "/unique_tags", "r").read().strip().split('\n')
 new_file = open(str(sys.argv[3]),"w")
 
-new_file.write("sed -e '")
 for l1 in clean_tag_file:
 	tempTag = l1
 	found = "0"
@@ -36,5 +35,3 @@ for l1 in clean_tag_file:
 
 
 
-
-new_file.write("'")
