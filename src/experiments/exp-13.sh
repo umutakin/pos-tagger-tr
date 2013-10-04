@@ -10,4 +10,6 @@ python $SRC_FOLDER/pruner_average.py "13" $WORK_FOLDER/avg_div4.sh $WORK_FOLDER
 
 chmod 777 $WORK_FOLDER/avg_div4.sh
 
+sed -i '/s\/\.\*\/\/g/d' $WORK_FOLDER/avg_div4.sh
+
 cat $DATA_FILE | $WORK_FOLDER/avg_div4.sh > $WORK_FOLDER/pruned.data
